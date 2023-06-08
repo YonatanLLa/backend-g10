@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def inicio():
     name = request.args.get('name')
+    print('name: '+name)
     if name:
         message = f'Hola, {name}'
     else:
