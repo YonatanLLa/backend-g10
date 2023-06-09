@@ -60,4 +60,41 @@ SELECT * FROM tareas WHERE usuario_id=1 or usuario_id=2;
 INSERT INTO tareas (id, titulo, descripcion, usuario_id) VALUES(DEFAULT, 'Jugar futbol', 'me gusta el futbol',1),
 															  (DEFAULT, 'Correr', 'Me gust hacer ejercicio',1);
 
-SELECT * FROM tareas WHERE usuario_id=1
+SELECT * FROM tareas WHERE usuario_id=1 AND titulo LIKE '%Jugar%';
+SELECT * FROM usuarios WHERE nombre LIKE '%a';
+SELECT * FROM usuarios WHERE nombre LIKE 'm%';
+
+-- si queremos distinguir entre mayos con minus
+SELECT * FROM usuarios WHERE nombre LIKE BINARY 'y%';
+
+-- _ > indico cuantos caracteres debe de saltar pata que busque el caracter indicado
+SELECT * FROM usuarios WHERE nombre LIKE BINARY '_a%';
+
+SELECT * FROM usuarios WHERE nombre NOT LIKE  '_o%';
+
+-- Tarea sin dueño
+INSERT INTO tareas(id, titulo, descripcion, usuario_id) VALUES (DEFAULT, 'no hacer nada', 'no se corre', NULL);
+
+SELECT * FROM tareas;
+
+INSERT INTO tareas(id, titulo, descripcion, usuario_id) VALUES (DEFAULT, 'progrmanar', 'Lo que me apaciona hacer', 3);
+-- Intersecion de tablas que llegaria ser la relacion
+SELECT * FROM usuarios INNER JOIN tareas ON usuarios.id = tareas.usuario_id;
+
+-- FULL OUTER JOIN
+SELECT * FROM usuarios LEFT JOIN tareas ON usuarios.id = tareas.usuario_id UNION
+SELECT * FROM usuarios RIGHT JOIN tareas ON usuarios.id = tareas.usuario_id;
+
+-- CONCATENAR > juntar combinar
+
+SELECT CONCAT(titulo,' ', descripcion) AS 'nombre completo' FROM tareas;
+
+-- 1. Devolver todos los usuarios cuyo DNI contengan el numero 5
+
+SELECT dni FROM usuarios WHERE dni LIKE '%5%';
+
+-- 2. Devolver todos los usuarios cuyo dni tengan el tercer digito 8 
+SELECT dni FROM usuarios WHERE dni LIKE '___0%';
+
+-- 3. Devolver todas las tareas del usuario yonatan
+SELECT descripcion FROM usuarios INNER JOIN tareas ON usuarios.id = tareas.usuario_id WHERE nombre='yonatan';
